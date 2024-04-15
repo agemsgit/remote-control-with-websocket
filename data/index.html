@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 
 <head>
   <meta charset="utf-8">
@@ -14,11 +14,36 @@
 </head>
 
 <body>
-  <div class="panel">
-    <h1>ESP32 remote control</h1>
-    <div id="led" class="%STATE%"></div>
-    <button id="toggle">Toggle</button>
-  </div>
+  <h3>ESP32 remote control</h3>
+  <div id="led" class="%STATE%"></div>
+  <button id="toggle">Toggle</button>
+
+
+  <h4>midea</h4>
+  <label class="switch">
+    <input type="checkbox" onchange="toggleCheckbox(this)" id="1">
+    <span class="slider"></span>
+  </label>
+
+  <h4>lg</h4>
+  <label class="switch">
+    <input type="checkbox" onchange="toggleCheckbox(this)" id="2">
+    <span class="slider"></span>
+  </label>
+
+  <h4>mit-elc</h4>
+  <label class="switch">
+    <input type="checkbox" onchange="toggleCheckbox(this)" id="3">
+    <span class="slider"></span>
+  </label>
+
+  <h4>mit-heavy</h4>
+  <label class="switch">
+    <input type="checkbox" onchange="toggleCheckbox(this)" id="4">
+    <span class="slider"></span>
+  </label>
+
+  <h3>@kadir-2024</h3>
 </body>
 
 </html>

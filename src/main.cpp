@@ -16,7 +16,7 @@
 // Definition of macros
 // ----------------------------------------------------------------------------
 
-#define LED_PIN   26
+#define LED_PIN   2
 #define BTN_PIN   22
 #define HTTP_PORT 80
 
@@ -28,8 +28,8 @@
 const uint8_t DEBOUNCE_DELAY = 10; // in milliseconds
 
 // WiFi credentials
-const char *WIFI_SSID = "YOUR_WIFI_SSID";
-const char *WIFI_PASS = "YOUR_WIFI_PASSWORD";
+const char *WIFI_SSID = "AGEMS_ARGE";
+const char *WIFI_PASS = "25802580";
 
 // ----------------------------------------------------------------------------
 // Definition of the LED component
@@ -156,8 +156,8 @@ void initWebServer() {
 // ----------------------------------------------------------------------------
 
 void notifyClients() {
-    const uint8_t size = JSON_OBJECT_SIZE(1);
-    StaticJsonDocument<size> json;
+    //const uint8_t size = JSON_OBJECT_SIZE(1);
+    JsonDocument json;  //JsonDocument
     json["status"] = led.on ? "on" : "off";
 
     char buffer[17];
@@ -169,8 +169,8 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     AwsFrameInfo *info = (AwsFrameInfo*)arg;
     if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
 
-        const uint8_t size = JSON_OBJECT_SIZE(1);
-        StaticJsonDocument<size> json;
+        //const uint8_t size = JSON_OBJECT_SIZE(1);
+        JsonDocument json;
         DeserializationError err = deserializeJson(json, data);
         if (err) {
             Serial.print(F("deserializeJson() failed with code "));
@@ -179,6 +179,11 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         }
 
         const char *action = json["action"];
+        const char *action1 = json["dene"];
+        Serial.println(action);
+        Serial.println(action1);
+        Serial.println(json.memoryUsage());
+
         if (strcmp(action, "toggle") == 0) {
             led.on = !led.on;
             notifyClients();
@@ -222,7 +227,7 @@ void initWebSocket() {
 void setup() {
     pinMode(onboard_led.pin, OUTPUT);
     pinMode(led.pin,         OUTPUT);
-    pinMode(button.pin,      INPUT);
+    pinMode(button.pin,      INPUT),PULLUP;
 
     Serial.begin(115200); delay(500);
 
@@ -246,8 +251,8 @@ void loop() {
         notifyClients();
     }
     
-    onboard_led.on = millis() % 1000 < 50;
+    //onboard_led.on = millis() % 1000 < 50;
 
     led.update();
-    onboard_led.update();
+    //onboard_led.update();
 }
